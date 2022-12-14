@@ -1,9 +1,8 @@
+const redirectURI = process.env.NODE_ENV === 'development' ? 'http://localhost:3000/' : 'https://playmakespotify.com/';
+const clientID = '5084645426d2429a8ef352a99ba328b3';
+
 const Spotify = {
-    clientID: '5084645426d2429a8ef352a99ba328b3',
-
-    redirectURI: 'https://playmakerspotify.com/',
-
-    accessUrl: `https://accounts.spotify.com/authorize?client_id=${this.clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${this.redirectURI}`,
+    accessUrl: `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`,
 
     search(term) {
         const accessToken = window.localStorage.getItem('token');
