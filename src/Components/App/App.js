@@ -10,15 +10,9 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      searchResults: [
-        {name: "Lost", artist: "Frank Ocean", album: "Channel Orange", id: 1},
-        {name: "Super Rich Kids", artist: "Frank Ocean", album: "Channel Orange", id: 2}
-      ],
-      playlistName: "My First Playlist!",
-      playlistTracks: [
-        {name: "Pilot Jones", artist: "Frank Ocean", album: "Channel Orange", id: 3},
-        {name: "Pyramids", artist: "Frank Ocean", album: "Channel Orange", id: 4}
-      ],
+      searchResults: [],
+      playlistName: "Enter Playlist Name...",
+      playlistTracks: [],
       token: ""
     }
 
@@ -50,9 +44,10 @@ class App extends React.Component {
   }
 
   savePlaylist() {
-    // Generate an array of uri values called trackURIs from the playlistTracks property
-    // Pass the trackURIs array and playlistName to a method that will save the user's playlist to their account
-    console.log('App.js:52 - savePlaylist() called.');
+    let trackURIs = this.state.playlistTracks.map(track => track.uri );
+    Spotify.save(this.state.playlistName, trackURIs).then(() => {
+      this.setState({ playlistName: "Enter Playlist Name...", playlistTracks: [] })
+    });
   }
 
   search(searchTerm) {
@@ -64,12 +59,13 @@ class App extends React.Component {
   componentDidMount() {
     const hash = window.location.hash;
     let token = window.localStorage.getItem("token");
-    console.log(token);
+
     if (!this.state.token && hash) {
       token = hash.match('access_token=([^&]*)&')[1];
       let expiresIn = hash.match('expires_in=([^&]*)')[1];
 
-      window.location.hash = '';
+      window.location.hash = "";
+
       window.localStorage.setItem('token', token);
       window.setTimeout(() => {
         window.localStorage.removeItem('token');
@@ -85,7 +81,7 @@ class App extends React.Component {
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
         <div className="App">
-          { !this.state.token && <a href={Spotify.accessUrl} className="Button-spotify" onClick="handleLogin">Login in with Spotify</a> }
+          { !this.state.token && <a href={Spotify.accessUrl} className="Button-spotify" >Login in with Spotify</a> }
           {this.state.token && <SearchBar onSearch={this.search} />}
           <div className="App-playlist">
             {this.state.token && <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />}
