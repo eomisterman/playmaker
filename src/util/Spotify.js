@@ -1,4 +1,4 @@
-const redirectURI = process.env.NODE_ENV === 'development' ? 'http://localhost:3000/' : 'https://playmakespotify.com/';
+const redirectURI = process.env.NODE_ENV === 'development' ? 'http://localhost:3000/' : 'https://playmakerspotify.com/';
 const clientID = '5084645426d2429a8ef352a99ba328b3';
 
 const Spotify = {
