@@ -83,6 +83,22 @@ h2 {
   width: 100%;
 }
 
+.Button-spotify {
+  cursor: pointer;
+  width: 10rem;
+  padding: 1rem 0;
+  border-radius: 54px;
+  border-width: 0px;
+  margin-top: 10rem;
+  margin-bottom: 10rem;
+  background-color: #6c41ec;
+  text-align: center;
+  font-size: .83rem;
+  transition: background-color .25s;
+  color: #fff;
+  font-weight: 500;
+}
+
 @media only screen and (max-width: 1020px) {
   .App-playlist {
     align-items: center;
