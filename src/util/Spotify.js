@@ -1,10 +1,9 @@
-const clientID = '5084645426d2429a8ef352a99ba328b3';
-const redirectURI = 'http://localhost:3000/';
-
 const Spotify = {
-    accessUrl: `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`,
+    clientID: '5084645426d2429a8ef352a99ba328b3',
 
-    redirectURI: 'http://localhost:3000/',
+    redirectURI: 'https://playmakerspotify.com/',
+
+    accessUrl: `https://accounts.spotify.com/authorize?client_id=${this.clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${this.redirectURI}`,
 
     search(term) {
         const accessToken = window.localStorage.getItem('token');
