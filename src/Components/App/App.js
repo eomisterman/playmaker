@@ -79,7 +79,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Ja<span className="highlight">mmm</span>ing</h1>
+        <h1>Play<span className="highlight">list</span>maker</h1>
         <div className="App">
           { !this.state.token && <a href={Spotify.accessUrl} className="Button-spotify" >Login in with Spotify</a> }
           {this.state.token && <SearchBar onSearch={this.search} />}
