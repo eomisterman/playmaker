@@ -67,7 +67,7 @@ h2 {
 
 .App {
   height: 100%;
-  padding: 0 17% 10% 17%;
+  padding: 10% 17% 10% 17%;
   background-image: url('./background_photo_desktop.jpg');
   background-size: cover;
   background-position: center;
@@ -86,10 +86,10 @@ h2 {
 .Button-spotify {
   cursor: pointer;
   width: 10rem;
-  padding: 1rem 0;
+  padding: 1rem 1rem;
   border-radius: 54px;
   border-width: 0px;
-  margin-top: 10rem;
+  margin-top: 20rem;
   margin-bottom: 10rem;
   background-color: #6c41ec;
   text-align: center;
