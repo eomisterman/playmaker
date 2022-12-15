@@ -5,9 +5,15 @@ class Track extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+            audio: null
+        }
+
         this.renderAction = this.renderAction.bind(this);
         this.addTrack = this.addTrack.bind(this);
         this.removeTrack = this.removeTrack.bind(this);
+        this.playPreview = this.playPreview.bind(this);
+        this.stopPreview = this.stopPreview.bind(this);
     }
 
     addTrack() {
@@ -29,9 +35,28 @@ class Track extends React.Component {
         return (action);
     }
 
+    playPreview() {
+        const audio = new Audio(this.props.track.preview);
+        audio.play()
+            .then(() => {
+                console.log(`${this.props.track.name} currently playing`);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        this.setState({ audio: audio })
+    }
+
+    stopPreview() {
+        if (!this.state.audio) return;
+
+        this.state.audio.pause();
+        this.setState({ audio: null })
+    }
+
     render() {
         return (
-            <div className="Track">
+            <div className="Track" onMouseEnter={this.playPreview} onMouseLeave={this.stopPreview}>
                 <div className="Track-information">
                     <h3>{this.props.track.name}</h3>
                     <p>{this.props.track.artist} | {this.props.track.album}</p>
