@@ -89,7 +89,7 @@ h2 {
   padding: 1rem 1rem;
   border-radius: 54px;
   border-width: 0px;
-  margin-top: 20rem;
+  margin-top: 10rem;
   margin-bottom: 10rem;
   background-color: #6c41ec;
   text-align: center;
@@ -97,6 +97,7 @@ h2 {
   transition: background-color .25s;
   color: #fff;
   font-weight: 500;
+  display: inline-block;
 }
 
 @media only screen and (max-width: 1020px) {
