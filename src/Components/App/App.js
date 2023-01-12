@@ -1,101 +1,102 @@
-import React from 'react';
 import './App.css';
+import React, { useState, useEffect } from 'react';
 import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
 import Spotify from '../../util/Spotify';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
+function App() {
+    const [ token, setToken ] = useState('');
+    useEffect(() => {
+        const hash = window.location.hash;
+        let spotifyToken = window.localStorage.getItem("token");
+        let timeoutID;
+        console.log("useEffect")
 
-    this.state = {
-      searchResults: [],
-      playlistName: "Enter Playlist Name...",
-      playlistTracks: [],
-      token: ""
+        if(!token && spotifyToken) {
+            setToken(spotifyToken);
+        }
+
+        if (!spotifyToken && hash) {
+            spotifyToken = hash.match('access_token=([^&]*)&')[1];
+            let tokenExpiration = hash.match('expires_in=([^&]*)')[1];
+
+            window.location.href = "";
+            window.localStorage.setItem('token', spotifyToken);
+            window.localStorage.setItem('expiresIn', tokenExpiration);
+
+            timeoutID = setTimeout(() => {
+                window.localStorage.removeItem('token');
+                window.localStorage.removeItem('expiresIn');
+            }, tokenExpiration * 1000);
+
+            setToken(spotifyToken);
+        }
+        return () => {
+            clearTimeout(timeoutID);
+        };
+    }, [token, setToken])
+
+    const [ searchResults, setSearchResults ] = useState([]);
+    const search = (searchTerm) => {
+        Spotify.search(searchTerm).then(result => {
+            setSearchResults(result);
+          }).catch((error) => {
+            console.log(error);
+          });
     }
 
-    this.addTrack = this.addTrack.bind(this);
-    this.removeTrack = this.removeTrack.bind(this);
-    this.updatePlaylistName = this.updatePlaylistName.bind(this);
-    this.savePlaylist = this.savePlaylist.bind(this);
-    this.search = this.search.bind(this);
-  }
-
-  addTrack(track) {
-    let inPlaylist = this.state.playlistTracks.find(song => song.id === track.id);
-    if (inPlaylist) {
-      return;
-    } else {
-      let updatedPlaylist = this.state.playlistTracks;
-      updatedPlaylist.push(track);
-      this.setState({ playlistTracks: updatedPlaylist })
+    const [ playlistName, setPlaylistName ] = useState('Playlist Name...');
+    const updatePlaylistName = (name) => {
+        setPlaylistName(name);
     }
-  }
 
-  removeTrack(track) {
-    let updatedPlaylist = this.state.playlistTracks.filter(song => song.id !== track.id);
-    this.setState({ playlistTracks: updatedPlaylist });
-  }
-
-  updatePlaylistName(name) {
-    this.setState({ playlistName: name });
-  }
-
-  savePlaylist() {
-    let trackURIs = this.state.playlistTracks.map(track => track.uri );
-    Spotify.save(this.state.playlistName, trackURIs).then(() => {
-      this.setState({ playlistName: "Enter Playlist Name...", playlistTracks: [] })
-    });
-  }
-
-  search(searchTerm) {
-    Spotify.search(searchTerm).then(result => {
-      this.setState({ searchResults: result });
-    });
-  }
-
-  componentDidMount() {
-    const hash = window.location.hash;
-    let token = window.localStorage.getItem("token");
-
-    if (!this.state.token && hash) {
-      token = hash.match('access_token=([^&]*)&')[1];
-      let expiresIn = hash.match('expires_in=([^&]*)')[1];
-
-      window.location.hash = "";
-
-      window.localStorage.setItem('token', token);
-      window.setTimeout(() => {
-        window.localStorage.removeItem('token');
-        this.setState({ token: '' })
-      }, expiresIn * 1000);
-
-      this.setState({ token: token })
+    const [ playlistTracks, setPlaylistTracks ] = useState([]);
+    const addTrack = (track) => {
+        setPlaylistTracks(prev => [track, ...prev]);
     }
-  }
+    const removeTrack = (track) => {
+        setPlaylistTracks(prev => prev.filter(song => song.id !== track.id));
+    }
 
-  render() {
+    const savePlaylist = () => {
+        let trackURIs = playlistTracks.map(track => track.uri );
+        Spotify.save(playlistName, trackURIs).then(() => {
+            setPlaylistName("Playlist Name...");
+            setPlaylistTracks([]);
+        });
+    }
+
+    if (!token) {
+        return (
+            <div>
+                <h1>Play<span className="highlight">list</span>maker</h1>
+                <div className="App">
+                    <a href={Spotify.accessUrl} className="Button-spotify" >Login in with Spotify</a>
+                </div>
+            </div>
+        );
+    }
+
     return (
-      <div>
-        <h1>Play<span className="highlight">list</span>maker</h1>
-        <div className="App">
-          { !this.state.token && <a href={Spotify.accessUrl} className="Button-spotify" >Login in with Spotify</a> }
-          {this.state.token && <SearchBar onSearch={this.search} />}
-          <div className="App-playlist">
-            {this.state.token && <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} />}
-            {this.state.token && <Playlist 
-              playlistName={this.state.playlistName} 
-              onNameChange={this.updatePlaylistName}
-              playlistTracks={this.state.playlistTracks}
-              onRemove={this.removeTrack}
-              onSave={this.savePlaylist} />}
-          </div>
+        <div>
+            <h1>Play<span className="highlight">list</span>maker</h1>
+            <div className="App">
+                <SearchBar onSearch={search} />
+                <div className="App-playlist">
+                    <SearchResults 
+                        searchResults={searchResults} 
+                        onAdd={addTrack} />
+                    <Playlist 
+                        playlistName={playlistName} 
+                        onNameChange={updatePlaylistName}
+                        playlistTracks={playlistTracks}
+                        onRemove={removeTrack}
+                        onSave={savePlaylist} />
+                </div>
+            </div>
         </div>
-      </div>
     );
-  }
 }
 
 export default App;
