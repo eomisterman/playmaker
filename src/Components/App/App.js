@@ -1,10 +1,10 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import SearchBar from '../SearchBar/SearchBar';
-import SearchResults from '../SearchResults/SearchResults';
+// import SearchBar from '../SearchBar/SearchBar';
+// import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
 import Spotify from '../../util/Spotify';
-import TopSongs from '../TopSongs/TopSongs';
+// import TopSongs from '../TopSongs/TopSongs';
 import Header from '../Header/Header';
 import SongBrowser from '../SongBrowser/SongBrowser';
 import Footer from '../Footer/Footer';
@@ -47,23 +47,23 @@ function App() {
         setToken('');
     }
 
-    const [ topSongs, setTopSongs ] = useState([]);
-    useEffect(() => {
-        Spotify.top("tracks").then(result => {
-            setTopSongs(result);
-        }).catch((error) => {
-            console.log(error);
-        })
-    }, [])
+    // const [ topSongs, setTopSongs ] = useState([]);
+    // useEffect(() => {
+    //     Spotify.top("tracks").then(result => {
+    //         setTopSongs(result);
+    //     }).catch((error) => {
+    //         console.log(error);
+    //     })
+    // }, [])
 
-    const [ searchResults, setSearchResults ] = useState([]);
-    const search = (searchTerm) => {
-        Spotify.search(searchTerm).then(result => {
-            setSearchResults(result);
-          }).catch((error) => {
-            console.log(error);
-          });
-    }
+    // const [ searchResults, setSearchResults ] = useState([]);
+    // const search = (searchTerm) => {
+    //     Spotify.search(searchTerm).then(result => {
+    //         setSearchResults(result);
+    //       }).catch((error) => {
+    //         console.log(error);
+    //       });
+    // }
 
     const [ playlistName, setPlaylistName ] = useState('Playlist Name...');
     const updatePlaylistName = (name) => {
@@ -108,29 +108,12 @@ function App() {
                         playlistTracks={playlistTracks}
                         onRemove={removeTrack}
                         onSave={savePlaylist} />
-                    {/* <TopSongs tracks={topSongs} onAdd={addTrack}/> */}
                 </aside>
                 <main className='main'>
-                    <SongBrowser />
-                    {/* <SearchBar onSearch={search} /> */}
-                    {/* <SearchResults 
-                        searchResults={searchResults} 
-                        onAdd={addTrack} /> */}
+                    <SongBrowser onAdd={addTrack}/>
                 </main>
             </div>
             <Footer />
-            {/* <SongBrowser />
-            <TopSongs tracks={topSongs} onAdd={addTrack}/>
-            <SearchBar onSearch={search} />
-            <SearchResults 
-                searchResults={searchResults} 
-                onAdd={addTrack} />
-            <Playlist 
-                playlistName={playlistName} 
-                onNameChange={updatePlaylistName}
-                playlistTracks={playlistTracks}
-                onRemove={removeTrack}
-                onSave={savePlaylist} /> */}
         </div>
     );
 }
