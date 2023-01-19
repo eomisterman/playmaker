@@ -8,7 +8,9 @@ const scopes = [
     'user-read-playback-state',
     'user-library-read',
     'user-read-private',
-    'user-read-email'
+    'user-read-email',
+    'user-top-read',
+    'user-read-recently-played'
 ]
 
 const Spotify = {
@@ -71,6 +73,30 @@ const Spotify = {
         } else {
             return;
         }
+    },
+
+    top(type) {
+        const token = window.localStorage.getItem('token');
+        const headers = { Authorization: `Bearer ${token}` };
+
+        return fetch(`https://api.spotify.com/v1/me/top/${type}`, {
+            headers: headers
+        })
+        .then(response => response.json())
+        .then(jsonResponse => {
+            if (!jsonResponse) {
+                return;
+            }
+            const items = jsonResponse.items;
+            return items.map(item => ({
+                id: item.id,
+                name: item.name,
+                artist: item.artists[0].name,
+                album: item.album.name,
+                uri: item.uri,
+                preview: item.preview_url,
+            }))
+        })
     }
 };
 
