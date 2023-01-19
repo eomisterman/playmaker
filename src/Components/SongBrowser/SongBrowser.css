@@ -1,0 +1,11 @@
+.SongBrowser {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 1rem;
+}
+
+li:hover {
+    color: #6c41ec;
+}
