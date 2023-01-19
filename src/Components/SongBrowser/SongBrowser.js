@@ -20,11 +20,11 @@ const SongBrowser = (props) => {
         setView(event.target.value);
     }
 
-    const [ artists, setArtists] = useState([]);
-    const showArtists = () => {
-        setView("artists");
+    // const [ artists, setArtists] = useState([]);
+    // const showArtists = () => {
+    //     setView("artists");
         
-    }
+    // }
 
 
     return (
