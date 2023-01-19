@@ -4,6 +4,10 @@ import SearchBar from '../SearchBar/SearchBar';
 import SearchResults from '../SearchResults/SearchResults';
 import Playlist from '../Playlist/Playlist';
 import Spotify from '../../util/Spotify';
+import TopSongs from '../TopSongs/TopSongs';
+import Header from '../Header/Header';
+import SongBrowser from '../SongBrowser/SongBrowser';
+import Footer from '../Footer/Footer';
 
 function App() {
     const [ token, setToken ] = useState('');
@@ -36,6 +40,21 @@ function App() {
             clearTimeout(timeoutID);
         };
     }, [token, setToken])
+
+    const signOut = () => {
+        window.localStorage.removeItem('token');
+        window.localStorage.removeItem('expiresIn');
+        setToken('');
+    }
+
+    const [ topSongs, setTopSongs ] = useState([]);
+    useEffect(() => {
+        Spotify.top("tracks").then(result => {
+            setTopSongs(result);
+        }).catch((error) => {
+            console.log(error);
+        })
+    }, [])
 
     const [ searchResults, setSearchResults ] = useState([]);
     const search = (searchTerm) => {
@@ -79,22 +98,39 @@ function App() {
     }
 
     return (
-        <div>
-            <h1>Play<span className="highlight">list</span>maker</h1>
-            <div className="App">
-                <SearchBar onSearch={search} />
-                <div className="App-playlist">
-                    <SearchResults 
-                        searchResults={searchResults} 
-                        onAdd={addTrack} />
+        <div className='App'>
+            <Header signOut={signOut} />
+            <div className='layout'>
+                <aside className='sidebar'>
                     <Playlist 
                         playlistName={playlistName} 
                         onNameChange={updatePlaylistName}
                         playlistTracks={playlistTracks}
                         onRemove={removeTrack}
                         onSave={savePlaylist} />
-                </div>
+                    {/* <TopSongs tracks={topSongs} onAdd={addTrack}/> */}
+                </aside>
+                <main className='main'>
+                    <SongBrowser />
+                    {/* <SearchBar onSearch={search} /> */}
+                    {/* <SearchResults 
+                        searchResults={searchResults} 
+                        onAdd={addTrack} /> */}
+                </main>
             </div>
+            <Footer />
+            {/* <SongBrowser />
+            <TopSongs tracks={topSongs} onAdd={addTrack}/>
+            <SearchBar onSearch={search} />
+            <SearchResults 
+                searchResults={searchResults} 
+                onAdd={addTrack} />
+            <Playlist 
+                playlistName={playlistName} 
+                onNameChange={updatePlaylistName}
+                playlistTracks={playlistTracks}
+                onRemove={removeTrack}
+                onSave={savePlaylist} /> */}
         </div>
     );
 }
