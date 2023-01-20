@@ -1,6 +1,8 @@
 const redirectURI = process.env.NODE_ENV === 'development' ? 'http://localhost:3000/' : 'https://playmakerspotify.com/';
 const clientID = '5084645426d2429a8ef352a99ba328b3';
 const scopes = [
+    'playlist-read-private',
+    'playlist-read-collaborative',
     'playlist-modify-public',
     'playlist-modify-private',
     'streaming',
@@ -40,7 +42,7 @@ const Spotify = {
         });
     },
 
-    save(playlistName, trackURIs) {
+    savePlaylist(playlistName, trackURIs) {
         if (playlistName && trackURIs.length) {
             const token = window.localStorage.getItem('token');
             let headers = {
@@ -54,8 +56,7 @@ const Spotify = {
             .then(response => response.json())
             .then(jsonResponse => {
                 userID = jsonResponse.id;
-                console.log(trackURIs);
-                return fetch(`https://api.spotify.com/v1/users/12150517711/playlists`, {
+                return fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, {
                     method: 'POST',
                     headers: headers,
                     body: JSON.stringify({ name: playlistName })
@@ -75,11 +76,11 @@ const Spotify = {
         }
     },
 
-    top(type) {
+    topTracks() {
         const token = window.localStorage.getItem('token');
         const headers = { Authorization: `Bearer ${token}` };
 
-        return fetch(`https://api.spotify.com/v1/me/top/${type}`, {
+        return fetch(`https://api.spotify.com/v1/me/top/tracks`, {
             headers: headers
         })
         .then(response => response.json())
@@ -97,7 +98,67 @@ const Spotify = {
                 preview: item.preview_url,
             }))
         })
-    }
+    },
+
+    topArtists() {
+        const token = window.localStorage.getItem('token');
+        const headers = { Authorization: `Bearer ${token}` };
+
+        return fetch(`https://api.spotify.com/v1/me/top/artists`, {
+            headers: headers
+        })
+        .then(response => response.json())
+        .then(jsonResponse => {
+            if (!jsonResponse) {
+                return;
+            }
+            const items = jsonResponse.items;
+            return items.map(item => ({
+                id: item.id,
+                name: item.name,
+                type: item.type,
+                popularity: item.popularity,
+                followers: item.followers.total,
+                genres: item.genres,
+                uri: item.uri,
+                images: item.images,
+            }))
+        })
+    },
+
+    getPlaylists() {
+        const token = window.localStorage.getItem('token');
+        const headers = { Authorization: `Bearer ${token}` };
+        let userID;
+
+        return fetch('https://api.spotify.com/v1/me', {
+                headers: headers
+        })
+        .then(response => response.json())
+        .then(jsonResponse => {
+            if (!jsonResponse) return ;
+            userID = jsonResponse.id;
+            return fetch(`https://api.spotify.com/v1/users/${userID}/playlists`, {
+                headers: headers
+            
+            })
+        })
+        .then(response => response.json())
+        .then(jsonResponse => {
+            if (!jsonResponse) return ;
+            return jsonResponse.items.map(item => ({
+                id: item.id,
+                name: item.name,
+                href: item.href,
+                uri: item.uri,
+                collaborative: item.collaborative,
+                public: item.public,
+                type: item.type,
+                images: item.images,
+                tracks: item.tracks,
+            }));
+        })
+    },
 };
 
 export default Spotify;
