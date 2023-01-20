@@ -49,7 +49,7 @@ function App() {
 
     // const [ topSongs, setTopSongs ] = useState([]);
     // useEffect(() => {
-    //     Spotify.top("tracks").then(result => {
+    //     Spotify.topTracks().then(result => {
     //         setTopSongs(result);
     //     }).catch((error) => {
     //         console.log(error);
@@ -80,7 +80,7 @@ function App() {
 
     const savePlaylist = () => {
         let trackURIs = playlistTracks.map(track => track.uri );
-        Spotify.save(playlistName, trackURIs).then(() => {
+        Spotify.savePlaylist(playlistName, trackURIs).then(() => {
             setPlaylistName("Playlist Name...");
             setPlaylistTracks([]);
         });
