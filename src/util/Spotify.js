@@ -96,6 +96,7 @@ const Spotify = {
                 album: item.album.name,
                 uri: item.uri,
                 preview: item.preview_url,
+                images: item.album.images,
             }))
         })
     },

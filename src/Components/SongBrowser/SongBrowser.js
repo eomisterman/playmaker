@@ -9,8 +9,8 @@ const SongBrowser = (props) => {
     const [view, setView] = useState("");
 
     const [songs, setSongs] = useState([]);    
-    const showSongs = () => {
-        Spotify.topTracks().then(result => {
+    const showSongs = async () => {
+        await Spotify.topTracks().then(result => {
             setSongs(result);
         }).catch((error) => {
             console.log(error);

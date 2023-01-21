@@ -1,0 +1,13 @@
+.SavedPlaylist {
+    padding: .8rem;
+    border-bottom: .1rem solid black;
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    margin-bottom: .3rem;
+    border-radius: .1rem;
+}
+
+.SavedPlaylist h2 {
+    font-weight:normal;
+}

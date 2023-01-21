@@ -1,0 +1,20 @@
+.Artist {
+    padding: .3rem;
+    /* border-bottom: .1rem solid black; */
+    display: flex;
+    /* justify-content: space-between; */
+    background-color: white;
+    margin-bottom: .3rem;
+    border-radius: .1rem;
+    align-items: center;
+}
+
+.Artist img {
+    height: 128px;
+    width: 128px;
+    margin-right: .3rem;
+}
+
+#artist-details h3 {
+    font-weight: bold;
+}

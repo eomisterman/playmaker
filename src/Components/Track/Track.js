@@ -47,7 +47,8 @@ const Track = (props) => {
             className="Track" 
             onMouseEnter={playPreview}
             onMouseLeave={stopPreview} >
-            <div className="Track-information">
+            <img src={props.track.images.at(-1).url} alt="img" />
+            <div className="Track-information" key={props.key}>
                 <h3>{props.track.name}</h3>
                 <p>{props.track.artist} | {props.track.album}</p>
             </div>
