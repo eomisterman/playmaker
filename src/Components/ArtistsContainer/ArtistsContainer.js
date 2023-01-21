@@ -5,10 +5,11 @@ import Artist from '../Artist/Artist';
 const ArtistsContainer = (props) => {
     return (
         <div className='ArtistsContainer'>
-            <h1>Top Artists</h1>
-            {props.artists.map(artist => 
+            {/* <h1>Top Artists</h1> */}
+            {props.artists.map((artist, index) => 
                 <Artist
-                    key={artist.id}
+                    index={index}
+                    id={artist.id}
                     name={artist.name}
                     genres={artist.genres}
                     images={artist.images}

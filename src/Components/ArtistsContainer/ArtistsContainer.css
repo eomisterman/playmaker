@@ -1,3 +1,7 @@
 .ArtistsContainer {
-
+    -moz-column-count: 3;
+    -webkit-column-count: 3;
+    column-count: 4;
+    padding: .5rem;
+    background-color: lightgray;
 }
