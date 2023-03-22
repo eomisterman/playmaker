@@ -1,13 +1,12 @@
-import './App.css';
 import React, { useState, useEffect } from 'react';
-// import SearchBar from '../SearchBar/SearchBar';
-// import SearchResults from '../SearchResults/SearchResults';
-import Playlist from '../Playlist/Playlist';
-import Spotify from '../../util/Spotify';
-// import TopSongs from '../TopSongs/TopSongs';
+import './App.css';
+
 import Header from '../Header/Header';
+import Playlist from '../Playlist/Playlist';
 import SongBrowser from '../SongBrowser/SongBrowser';
 import Footer from '../Footer/Footer';
+
+import Spotify from '../../util/Spotify';
 
 function App() {
     const [ token, setToken ] = useState('');
@@ -41,30 +40,6 @@ function App() {
         };
     }, [token, setToken])
 
-    const signOut = () => {
-        window.localStorage.removeItem('token');
-        window.localStorage.removeItem('expiresIn');
-        setToken('');
-    }
-
-    // const [ topSongs, setTopSongs ] = useState([]);
-    // useEffect(() => {
-    //     Spotify.topTracks().then(result => {
-    //         setTopSongs(result);
-    //     }).catch((error) => {
-    //         console.log(error);
-    //     })
-    // }, [])
-
-    // const [ searchResults, setSearchResults ] = useState([]);
-    // const search = (searchTerm) => {
-    //     Spotify.search(searchTerm).then(result => {
-    //         setSearchResults(result);
-    //       }).catch((error) => {
-    //         console.log(error);
-    //       });
-    // }
-
     const [ playlistName, setPlaylistName ] = useState('Playlist Name...');
     const updatePlaylistName = (name) => {
         setPlaylistName(name);
@@ -76,6 +51,12 @@ function App() {
     }
     const removeTrack = (track) => {
         setPlaylistTracks(prev => prev.filter(song => song.id !== track.id));
+    }
+
+    const signOut = () => {
+        window.localStorage.removeItem('token');
+        window.localStorage.removeItem('expiresIn');
+        setToken('');
     }
 
     const savePlaylist = () => {
@@ -90,7 +71,7 @@ function App() {
         return (
             <div>
                 <h1>Play<span className="highlight">list</span>maker</h1>
-                <div className="App">
+                <div className="App-login">
                     <a href={Spotify.accessUrl} className="Button-spotify" >Login in with Spotify</a>
                 </div>
             </div>
