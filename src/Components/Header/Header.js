@@ -1,16 +1,18 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import './Header.css';
-import React from "react";
 
-const Header = (props) => {
-    const signOut = () => {
-        props.signOut();
-    }
-    return (
-        <nav className="Header">
-            <h1>trac<span className="highlight">K</span>emist</h1>
-            <button id="sign-out" onClick={signOut} >Sign out</button>
-        </nav>
-    );
-}
+const Header = ({ signOut }) => {
+  return (
+    <div className="header">
+      <h1 className="app-name">tracKemist</h1>
+      <button className="sign-out-button" onClick={signOut}>Sign Out</button>
+    </div>
+  );
+};
+
+Header.propTypes = {
+  signOut: PropTypes.func.isRequired,
+};
 
 export default Header;

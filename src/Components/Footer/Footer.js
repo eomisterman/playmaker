@@ -1,12 +1,12 @@
+import React from 'react';
 import './Footer.css';
-import React from "react";
 
 const Footer = () => {
-    return (
-        <nav className="Footer">
-            <h1>trac<span className="highlight">K</span>emist</h1>
-        </nav>
-    );
-}
+  return (
+    <div className="footer">
+      <h1 className="app-name-footer">tracKemist</h1>
+    </div>
+  );
+};
 
 export default Footer;
