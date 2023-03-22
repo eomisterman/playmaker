@@ -1,5 +1,5 @@
 html, body {
-  height: 100%;
+  /* height: 100%; */
   /* background-color: #2c3134; */
 }
 
@@ -12,7 +12,7 @@ html, body {
   background-color: #ffffff;
 }
 
-h1 {
+.login h1 {
   font-size: 4rem;
   font-weight: bold;
   text-align: center;
@@ -40,4 +40,21 @@ h1 {
 
 .Button-spotify:hover {
   background-color: #1ed760;
+}
+
+.layout {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.sidebar {
+  flex: 0 0 25%; /* Set the width of the sidebar to 25% of the layout */
+  background-color: #f2f2f2; /* Add a background color to the sidebar */
+}
+
+.main {
+  flex: 0 0 75%; /* Set the width of the main content area to 75% of the layout */
+  background-color: #fff; /* Add a background color to the main content area */
 }

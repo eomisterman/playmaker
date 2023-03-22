@@ -69,7 +69,7 @@ function App() {
 
     if (!token) {
         return (
-            <div>
+            <div className="login">
                 <h1>Play<span className="highlight">list</span>maker</h1>
                 <div className="App-login">
                     <a href={Spotify.accessUrl} className="Button-spotify" >Login in with Spotify</a>
