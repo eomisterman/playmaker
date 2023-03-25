@@ -46,29 +46,25 @@ const SongBrowser = (props) => {
 
 
     return (
-        <div className='SongBrowser'>
-            <nav className="nav">
-                <ul className="nav-list">
+        <div>
+            <ul className='SongBrowser'>
                 <li onClick={showPlaylists} value="playlists">Your Playlists</li>
                 <li onClick={showSongs} value="songs">Top Songs</li>
                 <li onClick={showArtists} value="artists">Top Artists</li>
                 <li onClick={changeView} value="genres">Genres</li>
                 <li onClick={changeView} value="search">Search</li>
-                </ul>
-            </nav>
-            <main className="content">
-                {view === "playlists" && 
+            </ul>
+            {view === "playlists" && 
                 <PlaylistsContainer playlists={playlists} />}
-                {view === "songs" && 
+            {view === "songs" && 
                 <Tracklist 
                     tracks={songs} 
                     onAdd={props.onAdd} 
-                    isRemoval={false} />}
-                {view === "artists" &&
+                    isRemoval={false} />
+            }
+            {view === "artists" &&
                 <ArtistsContainer artists={artists} />}
-            </main>
         </div>
-
     );
 }
 

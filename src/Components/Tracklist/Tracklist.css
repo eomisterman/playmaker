@@ -1,9 +1,6 @@
 .TrackList {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 2fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 2fr));
   grid-gap: .5rem;
-  padding: 0 1rem;
-  width: 100%;
-  box-sizing: border-box;
 }
 

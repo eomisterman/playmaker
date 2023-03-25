@@ -4,9 +4,8 @@ import Artist from '../Artist/Artist';
 
 const ArtistsContainer = (props) => {
     return (
-
-
         <div className='ArtistsContainer'>
+            {/* <h1>Top Artists</h1> */}
             {props.artists.map((artist, index) => 
                 <Artist
                     index={index}
@@ -17,8 +16,6 @@ const ArtistsContainer = (props) => {
                 />
             )}
         </div>
-
-        
     );
 }
 

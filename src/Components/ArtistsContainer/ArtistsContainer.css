@@ -1,8 +1,7 @@
 .ArtistsContainer {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    grid-gap: .5rem;
-    overflow: hidden;
-    margin: 0 1rem;
-  }
-  
+    -moz-column-count: 3;
+    -webkit-column-count: 3;
+    column-count: 4;
+    padding: .5rem;
+    background-color: lightgray;
+}

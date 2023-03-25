@@ -34,36 +34,26 @@ const Track = (props) => {
     const renderAction = () => {
         let action = props.isRemoval ? (
             <button 
-                className="Action-button"
+                className="Track-action"
                 onClick={removeTrack}>-</button>) : (
             <button 
-                className="Action-button" 
+                className="Track-action" 
                 onClick={addTrack}>+</button>);
         return (action);
     }
 
     return (
-
-
         <div 
             className="Track" 
             onMouseEnter={playPreview}
             onMouseLeave={stopPreview} >
-            <figure className="Track-image">
-                <img src={props.track.images.at(-1).url} alt="img" />
-            </figure>
-            <div className="Track-information">
-                <header className="Track-header">
-                    <h3 className="Track-name">{props.track.name}</h3>
-                    <p className="Track-meta">{props.track.artist} | {props.track.album}</p>
-                </header>
+            <img src={props.track.images.at(-1).url} alt="img" />
+            <div className="Track-information" key={props.key}>
+                <h3>{props.track.name}</h3>
+                <p>{props.track.artist} | {props.track.album}</p>
             </div>
-            <div className="Track-action">
-                {renderAction()}
-            </div>
+            {renderAction()}
         </div>
-
-
     );
 }
 

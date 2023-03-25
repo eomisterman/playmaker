@@ -94,7 +94,7 @@ function App() {
                     <SongBrowser onAdd={addTrack}/>
                 </main>
             </div>
-            {/* <Footer /> */}
+            <Footer />
         </div>
     );
 }
