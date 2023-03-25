@@ -48,16 +48,22 @@ html, body {
 
 .layout {
   display: flex;
-  /* flex-direction: row; */
-  /* justify-content: space-between; */
+  height: 100vh;
 }
 
 .sidebar {
-  flex: 1; /* Set the width of the sidebar to 25% of the layout */
-  background-color: #f2f2f2; /* Add a background color to the sidebar */
+  flex: 0 0 auto;
+  width: 20%;
+  background-color: #f2f2f2;
+  top: 0;
+  bottom: 0;
+  /* overflow-y: auto; */
+  min-height: 100vh;
+  max-height: calc(100% - 1em);
 }
 
 .main {
-  flex: 1 1 90%; /* Set the width of the main content area to 75% of the layout */
-  background-color: #fff; /* Add a background color to the main content area */
+  flex: 1 1 80%;
+  background-color: #fff;
+  overflow-y: auto;
 }

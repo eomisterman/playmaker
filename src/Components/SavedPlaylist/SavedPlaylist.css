@@ -1,11 +1,11 @@
 .SavedPlaylist {
     padding: .8rem;
-    border-bottom: .1rem solid black;
     display: flex;
     justify-content: space-between;
-    background-color: white;
+    background-color: #F3F3F3;
     margin-bottom: .3rem;
-    border-radius: .1rem;
+    border-radius: 0.3rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .SavedPlaylist h2 {
