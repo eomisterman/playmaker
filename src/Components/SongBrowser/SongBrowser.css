@@ -1,15 +1,25 @@
 .SongBrowser {
+    
+}
+
+.SongBrowser nav ul {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     padding: 1rem;
     margin-bottom: 1rem;
 }
-
-li {
+  
+.SongBrowser nav li {
     font-weight: bold;
 }
-
-li:hover {
-    color: #6c41ec;
+  
+.SongBrowser nav li:hover {
+    color: #ff0000;
+    cursor: pointer;
 }
+
+.content {
+    
+}
+  
