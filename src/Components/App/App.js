@@ -4,7 +4,6 @@ import './App.css';
 import Header from '../Header/Header';
 import Playlist from '../Playlist/Playlist';
 import SongBrowser from '../SongBrowser/SongBrowser';
-import Footer from '../Footer/Footer';
 
 import Spotify from '../../util/Spotify';
 
@@ -94,7 +93,6 @@ function App() {
                     <SongBrowser onAdd={addTrack}/>
                 </main>
             </div>
-            {/* <Footer /> */}
         </div>
     );
 }
