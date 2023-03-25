@@ -9,6 +9,7 @@ const ArtistsContainer = (props) => {
         <div className='ArtistsContainer'>
             {props.artists.map((artist, index) => 
                 <Artist
+                    key={artist.id}
                     index={index}
                     id={artist.id}
                     name={artist.name}
