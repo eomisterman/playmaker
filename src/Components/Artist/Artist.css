@@ -1,12 +1,10 @@
 .Artist {
+    background-color: #F3F3F3;
     padding: .3rem;
-    /* border-bottom: .1rem solid black; */
     display: flex;
-    /* justify-content: space-between; */
-    background-color: white;
-    margin-bottom: .3rem;
-    border-radius: .1rem;
     align-items: center;
+    border-radius: 0.3rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .Artist img {
