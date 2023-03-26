@@ -160,6 +160,33 @@ const Spotify = {
             }));
         })
     },
+
+    getPlaylistTracks(playlistID) {
+        const token = window.localStorage.getItem('token');
+        const headers = { Authorization: `Bearer ${token}` };
+
+        return fetch(
+            `https://api.spotify.com/v1/playlists/${playlistID}/tracks`, 
+            { headers: headers }
+        )
+        .then(response => response.json())
+        .then(jsonResponse => {
+            if (!jsonResponse.items) {
+                return Error(jsonResponse.error.message);
+            }
+            return jsonResponse.items.map(item => ({
+                id: item.track.id,
+                name: item.track.name,
+                artist: item.track.artists[0].name,
+                album: item.track.album.name,
+                uri: item.track.uri,
+                preview: item.track.preview_url,
+                images: item.track.album.images,
+            }));
+        }).catch((error) => {
+            console.error(error);
+        });
+    },
 };
 
 export default Spotify;

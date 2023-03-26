@@ -1,11 +1,18 @@
 import './SavedPlaylist.css';
 import React from "react";
 
-const SavedPlaylist = (props) => {
+const SavedPlaylist = ({id, name, tracks, onClick}) => {
+    const updateSelectedPlaylist = (event) => {
+        console.log(id)
+        onClick(id);
+    }
+    
     return (
-        <div className='SavedPlaylist' id={props.id}>
-            <h2>{props.name}</h2>
-            <p>{props.tracks.total}</p>
+        <div className='SavedPlaylist' 
+            id={id} 
+            onClick={updateSelectedPlaylist}>
+            <h2>{name}</h2>
+            <p>{tracks.total}</p>
         </div>
     );
 }
