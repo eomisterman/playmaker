@@ -33,10 +33,8 @@ const SongBrowser = (props) => {
     }
 
     const [playlists, setPlaylists] = useState([]);
-    const showPlaylists = () => {
-        console.log("Fetching Playlists...");
-        Spotify.getPlaylists().then(result => {
-            console.log(result);
+    const showPlaylists = async () => {
+        await Spotify.getPlaylists().then(result => {
             setPlaylists(result);
         }).catch((error) => {
             console.error(error);
@@ -58,7 +56,10 @@ const SongBrowser = (props) => {
             </nav>
             <main className="content">
                 {view === "playlists" && 
-                <PlaylistsContainer playlists={playlists} />}
+                    <PlaylistsContainer 
+                        playlists={playlists} 
+                        onAdd={props.onAdd} />
+                }
                 {view === "songs" && 
                 <Tracklist 
                     tracks={songs} 
