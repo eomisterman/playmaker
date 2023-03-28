@@ -2,25 +2,23 @@ import './ArtistsContainer.css';
 import React from 'react';
 import Artist from '../Artist/Artist';
 
-const ArtistsContainer = (props) => {
-    return (
+function ArtistsContainer({ artists }) {
+  return (
 
+    <div className="ArtistsContainer">
+      {artists.map((artist, index) => (
+        <Artist
+          key={artist.id}
+          index={index}
+          id={artist.id}
+          name={artist.name}
+          genres={artist.genres}
+          images={artist.images}
+        />
+      ))}
+    </div>
 
-        <div className='ArtistsContainer'>
-            {props.artists.map((artist, index) => 
-                <Artist
-                    key={artist.id}
-                    index={index}
-                    id={artist.id}
-                    name={artist.name}
-                    genres={artist.genres}
-                    images={artist.images}
-                />
-            )}
-        </div>
-
-        
-    );
+  );
 }
 
 export default ArtistsContainer;
