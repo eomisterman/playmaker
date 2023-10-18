@@ -5,10 +5,24 @@ import Header from '../Header/Header';
 import Playlist from '../Playlist/Playlist';
 import SongBrowser from '../SongBrowser/SongBrowser';
 
-import Spotify from '../../util/Spotify';
+import Spotify, { redirectURI } from '../../util/Spotify';
 
 function App() {
   const [token, setToken] = useState('');
+
+  useEffect(() => {
+    if (window.location.hash) {
+      const [, accessToken] = window.location.hash.match(/access_token=([^&]*)/);
+      const [, tokenExpiration] = window.location.hash.match('expires_in=([^&]*)')[1];
+      window.localStorage.removeItem('token');
+      window.localStorage.removeItem('expiresIn');
+      window.localStorage.setItem('token', accessToken);
+      window.localStorage.setItem('expiresIn', tokenExpiration);
+      setToken(accessToken);
+      window.location = redirectURI;
+    }
+  }, [window.location.hash]);
+
   useEffect(() => {
     const { hash } = window.location;
     const spotifyToken = window.localStorage.getItem('token');
