@@ -1,4 +1,4 @@
-const redirectURI = process.env.NODE_ENV === 'development' ? 'http://localhost:3000/' : 'https://playmakerspotify.com/';
+export const redirectURI = process.env.NODE_ENV === 'development' ? 'http://localhost:3000/' : 'https://playmakerspotify.com/';
 const clientID = '5084645426d2429a8ef352a99ba328b3';
 const scopes = [
   'playlist-read-private',
@@ -98,7 +98,7 @@ const Spotify = {
       });
   },
 
-  topArtists() {
+  topArtists1() {
     const token = window.localStorage.getItem('token');
     const headers = { Authorization: `Bearer ${token}` };
 
@@ -121,6 +121,41 @@ const Spotify = {
           uri: item.uri,
           images: item.images,
         }));
+      });
+  },
+
+  topArtists() {
+    const token = window.localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+
+    return fetch('https://api.spotify.com/v1/me/top/artists', {
+      headers,
+    })
+      .then((response) => {
+        if (response.status === 401) {
+          window.location.href = Spotify.accessUrl;
+          return [];
+        }
+        return response.json();
+      })
+      .then((jsonResponse) => {
+        if (!jsonResponse) {
+          return null;
+        }
+        const { items } = jsonResponse;
+        return items.map((item) => ({
+          id: item.id,
+          name: item.name,
+          type: item.type,
+          popularity: item.popularity,
+          followers: item.followers.total,
+          genres: item.genres,
+          uri: item.uri,
+          images: item.images,
+        }));
+      })
+      .catch((error) => {
+        throw new Error(error.message);
       });
   },
 

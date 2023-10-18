@@ -4,6 +4,7 @@ import Tracklist from '../Tracklist/Tracklist';
 import Spotify from '../../util/Spotify';
 import ArtistsContainer from '../ArtistsContainer/ArtistsContainer';
 import PlaylistsContainer from '../PlaylistsContainer/PlaylistsContainer';
+import SearchBar from '../SearchBar/SearchBar';
 
 function SongBrowser(props) {
   const [view, setView] = useState('');
@@ -24,12 +25,17 @@ function SongBrowser(props) {
 
   const [artists, setArtists] = useState([]);
   const showArtists = () => {
-    Spotify.topArtists().then((result) => {
-      setArtists(result);
-    }).catch((error) => {
-      console.error(error);
-    });
-    setView('artists');
+    Spotify.topArtists()
+      .then((result) => {
+        setArtists(result);
+        setView('artists');
+      })
+      .catch((error) => {
+        console.error(error);
+        // handle the error by setting the artists state to an empty array
+        setArtists([]);
+        setView('artists');
+      });
   };
 
   const [playlists, setPlaylists] = useState([]);
@@ -69,6 +75,9 @@ function SongBrowser(props) {
         )}
         {view === 'artists'
                 && <ArtistsContainer artists={artists} />}
+        {view === 'search' && (
+          <SearchBar />
+        )}
       </main>
     </div>
 
